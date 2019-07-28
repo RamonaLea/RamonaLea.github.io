@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    Pandas处理数据汇总 |
+    
+    Ramona&#39;s Own Space</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+</html>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-Pandas处理数据汇总" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Pandas处理数据汇总
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/07/28/Pandas处理数据汇总/" class="article-date">
+  <time datetime="2019-07-28T09:14:42.354Z" itemprop="datePublished">2019-07-28</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/数据分析/">数据分析</a> / <a class="article-category-link" href="/categories/数据分析/编程语言/">编程语言</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+      
+
+      
+        <p>在学习极客时间的课程《数据分析实战45讲》过程中，主要用到了Pandas对数据进行处理，该博文主要记录过程中使用的一些相关代码。</p>
+<a id="more"></a>
+
+<h1 id="Pandas处理数据汇总"><a href="#Pandas处理数据汇总" class="headerlink" title="Pandas处理数据汇总"></a>Pandas处理数据汇总</h1><p>在进行数据分析的时候，首先要做的事情就是需要自己对数据进行一个预处理（前提是，数据是你自己搜集的情况下，如果直接使用的是已经集成好的数据的话，则另当别论）</p>
+<p>在学习数据分析的过程中，参考了极客时间的课程《数据分析实战45讲》，引用处会进行标注（标注【1】）。</p>
+<p>我所使用的版本是python3.6.</p>
+<h2 id="数据处理分类"><a href="#数据处理分类" class="headerlink" title="数据处理分类"></a>数据处理分类</h2><p>数据的处理大致分为四种情况【1】：</p>
+<ol>
+<li>完整性：单挑数据-完整？空值？</li>
+<li>全面性：每一列数据-定义？单位？本身？</li>
+<li>合法性：类型？内容？大小？的合法性</li>
+<li>唯一性：数据是否存在重复</li>
+</ol>
+<h2 id="具体实现"><a href="#具体实现" class="headerlink" title="具体实现"></a>具体实现</h2><p>以以下表格的分析为例子，如果后期另外的数据有另外的解决办法，那么将继续记录在此。</p>
+<p><img src="F:%5Ccourse%5C%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%5C%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84task%5C%E6%88%AA%E5%9B%BE.png" alt></p>
+<p>这是一个.xlsx文件，pandas中的读入方法为：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">df = pd.read_excel(<span class="string">"./food.xlsx"</span>) </span><br><span class="line"><span class="comment"># 提取出来的数据格式 &lt;class'pandas.core.frame.DataFrame'&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>填补缺失值： inplace 的作用在于，修改之后是否修改原表，如果为true则原表修改，false 则不修改</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#处理缺失值 - 使用平均值代替缺失值</span></span><br><span class="line">df[<span class="string">'ounces'</span>].fillna(df[<span class="string">'ounces'</span>].mean(),inplace=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>处理空值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#处理负值 - 直接删除行</span></span><br><span class="line">df.drop(df[df[<span class="string">'ounces'</span>] &lt;<span class="number">0</span>].index.values,inplace = <span class="literal">True</span>)</span><br><span class="line">print(df)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>统一大小写</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#统一大小写</span></span><br><span class="line">df[<span class="string">'food'</span>] = df[<span class="string">'food'</span>].str.lower()</span><br><span class="line">print(df)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>处理重复值问题</li>
+</ul>
+<p>此处的重复值处理的方法是，将food和animal都相同的数据合并成同一列ounces列则为这些列的平均值。</p>
+<p>此处需要给数据类型一个简单的介绍：</p>
+<p>series: </p>
+<p>一组数组（列表或元组），series除了一组数据外还包括一组索引（即只有行索引），索引可自行定义也可利用Series(),自动生成索引； </p>
+<p>dataframe: </p>
+<p>是表格型数据，既有行索引又有列索引，每列数据可以为不同类型数据（数值、字符串、布尔型值），可利用DataFrame（其他数据，dataframe属性)指定dataframe的属性创建dataframe。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dup = df.duplicated(subset=[<span class="string">'food'</span>,<span class="string">'animal'</span>], keep = <span class="literal">False</span>)<span class="comment">#返回值的类型&lt;class'pandas.core.series.Series'&gt; keep 有三种取值方法# </span></span><br><span class="line">print(dup[dup.values == <span class="literal">True</span>].index)</span><br><span class="line">df = df.groupby([<span class="string">'food'</span>, <span class="string">'animal'</span>]).mean()</span><br></pre></td></tr></table></figure>
+
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>得到的结果列的顺序发生了改变-如果要回到之前的列的排列方式-尝试过下面的做法，但是失败了，提示找不到’food’ 和 ‘animal’ 的索引，后期如果看到了对应的解决办法会更新。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># df = df[['food', 'ounces', 'animal']] #查询不到 food 和 animal 列 -- 该办法行不通</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/07/28/Pandas处理数据汇总/" data-id="cjymr03uj000b94tjajw4uwtr"
+         class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+      <a href="/2019/07/28/数据分析/" class="article-nav-link">
+        <strong class="article-nav-caption">Newer posts</strong>
+        <div class="article-nav-title">
+          
+            数据分析总览
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2019/07/28/hello-world/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">Hello World</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2019 Ramona&#39;s Own Space</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Ramona&#39;s Own Space"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/categories">Categories</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+<script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/snap.svg-min.js"></script>
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>
