@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    数据分析总览 |
+    
+    Ramona&#39;s Own Space</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+</html>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-数据分析" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      数据分析总览
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/09/08/数据分析/" class="article-date">
+  <time datetime="2019-09-08T12:54:07.758Z" itemprop="datePublished">2019-09-08</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/数据分析/">数据分析</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+      
+
+      
+        <p>数据分析入门笔记 – 极客时间上的《数据分析四十五讲》相关笔记。</p>
+<a id="more"></a>
+
+<h1 id="数据分析"><a href="#数据分析" class="headerlink" title="数据分析"></a>数据分析</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ol>
+<li><p>商业智能BI：基于数据仓库，经过数据挖掘之后得到商业价值的过程</p>
+</li>
+<li><p>数据仓库DW</p>
+</li>
+<li><p>数据挖掘DM： Knowledge Discovery in Database</p>
+<p>输入数据 –&gt; 数据预处理 –&gt; 数据挖掘 –&gt; 后处理 –&gt; 信息</p>
+<p>主要包括以下几种主要的任务：</p>
+<ol>
+<li>分类</li>
+<li>聚类</li>
+<li>预测</li>
+<li>关联分析</li>
+</ol>
+<p>详细的关系图</p>
+<p><img src="F:%5C%E7%AC%94%E8%AE%B0%5C%E5%9B%BE%5C%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98.png" alt></p>
+</li>
+</ol>
+<h3 id="其它概念"><a href="#其它概念" class="headerlink" title="其它概念"></a>其它概念</h3><p>元数据： 描述其它数据的数据；eg: 描述图书的详细信息</p>
+<p>数据元：最小的数据单元</p>
+<h2 id="数据采集流程"><a href="#数据采集流程" class="headerlink" title="数据采集流程"></a>数据采集流程</h2><h3 id="确定数据内容"><a href="#确定数据内容" class="headerlink" title="确定数据内容"></a>确定数据内容</h3><p>用户是根本，也是数据分析的出发点</p>
+<p>分析用户：谁 + 从哪儿来 + 到哪儿去；要做到具体场景具体分析</p>
+<p><img src="F:%5C%E7%AC%94%E8%AE%B0%5C%E5%9B%BE%5C%E7%94%A8%E6%88%B7%E5%88%86%E6%9E%90.jpg" alt></p>
+<p><img src="F:%5C%E7%AC%94%E8%AE%B0%5C%E5%9B%BE%5C%E7%94%A8%E6%88%B7%E5%88%86%E6%9E%90.png" alt></p>
+<h3 id="数据处理流程图"><a href="#数据处理流程图" class="headerlink" title="数据处理流程图"></a>数据处理流程图</h3><p><img src="F:%5C%E7%AC%94%E8%AE%B0%5C%E5%9B%BE%5C%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B%E5%9B%BE.jpg" alt></p>
+<h3 id="数据采集"><a href="#数据采集" class="headerlink" title="数据采集"></a>数据采集</h3><p><strong>一个数据的走势，是由多个维度影响的。我们需要通过多源对的数据采集，收集到尽可能多的数据维度</strong></p>
+<h4 id="数据源"><a href="#数据源" class="headerlink" title="数据源"></a>数据源</h4><ol>
+<li>开放数据源</li>
+<li>爬虫爬取</li>
+<li>日志采集</li>
+<li>传感器</li>
+</ol>
+<p><img src="F:%5C%E7%AC%94%E8%AE%B0%5C%E5%9B%BE%5C%E6%95%B0%E6%8D%AE%E6%BA%90.jpg" alt></p>
+<h4 id="使用八爪鱼采集数据"><a href="#使用八爪鱼采集数据" class="headerlink" title="使用八爪鱼采集数据"></a>使用八爪鱼采集数据</h4><p>善用流程-如果有错误的步骤，可以删掉重新来，不用重新构建整个项目</p>
+<h4 id="使用python采集数据"><a href="#使用python采集数据" class="headerlink" title="使用python采集数据"></a>使用python采集数据</h4><ol>
+<li>找到想要获取数据的网站</li>
+<li>审查元素 -&gt; network -&gt; XHR -&gt; 刷新 -&gt; 查看请求得到对应路径</li>
+<li>打开路径 -&gt; 如果是JSON格式对象可以直接使用，python里面可以直接把JSON格式的对象转换成 python对象</li>
+<li>但是有的时候，网页会用 JS 请求数据，那么只有都加载完之后，我们才能获取完整的 HTML 文件 -&gt; XPath 可以不受加载的限制，帮助我们定位想要的元素。</li>
+</ol>
+<p>JSON： 仅仅是一种数据格式，可以跨平台数据传输，速度快。</p>
+<p>JS：表示类的实例，不能传输。</p>
+<h3 id="数据清洗"><a href="#数据清洗" class="headerlink" title="数据清洗"></a>数据清洗</h3><p>清洗规则：</p>
+<ol>
+<li>完整性：单挑数据-完整？空值？</li>
+<li>全面性：每一列数据-定义？单位？本身？</li>
+<li>合法性：类型？内容？大小？的合法性</li>
+<li>唯一性：数据是否存在重复</li>
+</ol>
+<p>清洗工具：Pandas</p>
+<p>具体的操作见另一篇博文</p>
+<h3 id="数据集成"><a href="#数据集成" class="headerlink" title="数据集成"></a>数据集成</h3><p>eg: 随机挑选几位明星，粉丝总和达到20亿。这显然是不可能的，里面肯定存在着重复的数据 - 此时需要用到数据集成来解决问题。</p>
+<h4 id="两种架构"><a href="#两种架构" class="headerlink" title="两种架构"></a>两种架构</h4><p>Extract, Transform, Load </p>
+<ul>
+<li><p>ELT:  数据源抽取后先进行转换，然后将转换的结果写入目的地</p>
+</li>
+<li><p>ETL: 抽取后先将结果写入目的地，然后利用数据库的聚合分析能力或者外部计算框架，来完成转换步骤。</p>
+</li>
+</ul>
+<p>Extract: 将数据从已有的数据源中提取出来</p>
+<h3 id="数据变换"><a href="#数据变换" class="headerlink" title="数据变换"></a>数据变换</h3><p>-让渠道不同的数据到一个统一的数据库里</p>
+<p>-简单的理解就是数据在同样的范围中，拥有同样的计数方式，那么两者的拿到一起来进行数据分析才会有意义。</p>
+<h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><p>字段过滤 -&gt; 数据探索 -&gt; 相关性分析 -&gt; 建模筛选 -&gt; 数据变换</p>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><ul>
+<li>数据平滑：去除数据中的噪声，将连续数据离散化。-分箱、聚类、回归</li>
+<li>数据聚集：汇总-SQL中的聚集函数</li>
+<li>数据概化：较低的概念抽象成教改的概念-减少数据得复杂度</li>
+<li>数据规范化：使数据按比例缩放-将数据映射到一个新的特定的区域中 - Min-max、 Z-Score 、</li>
+<li>属性构造：构造出新的属性，并添加到属性集中-特征工程</li>
+</ul>
+<h3 id="数据可视化"><a href="#数据可视化" class="headerlink" title="数据可视化"></a>数据可视化</h3><p>准确的分析对象，确定他们想要得到的信息，然后确定你所有选择的数可视化的方法</p>
+<h2 id="数据分析算法"><a href="#数据分析算法" class="headerlink" title="数据分析算法"></a>数据分析算法</h2><p>关于数据分析算法的介绍和实践，会另外开博文。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/09/08/数据分析/" data-id="ck0azc17r000528tj5b0ivih0"
+         class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2019/09/08/电影评论情感分析/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">电影评论情感分析</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2019 Ramona&#39;s Own Space</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Ramona&#39;s Own Space"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/categories">Categories</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+<script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/snap.svg-min.js"></script>
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>
