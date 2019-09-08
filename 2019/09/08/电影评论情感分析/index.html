@@ -124,7 +124,7 @@
 <h4 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h4><p>一个单词由一个向量组成，上一个单词由tanh处理之后，会作为下一个单词的输入，和下一个单词一起作为输入。</p>
 <p>如此下一个单词的输入是包括了前面所有单词的信息的。这样就加强了前后单词的连接，对文本语音的处理十分有用。但是RNN却有一个很严重的缺点，神经网络很重要的部分是反馈，由于时间线过长，可能会造成梯度消失的问题。导致反馈过程终止，模型的训练也达不到预想的效果。</p>
 <h4 id="LSTM-1"><a href="#LSTM-1" class="headerlink" title="LSTM"></a>LSTM</h4><p>有三个门：遗忘门、输入门、输出门。</p>
-<p><img src="F:%5C%E7%AC%94%E8%AE%B0%5C%E5%9B%BE%5CLSTM.png" alt></p>
+<p><img src="LSTM.png" alt></p>
 <p>遗忘门：</p>
 <p>（上个细胞的隐藏状态 + 当前细胞的现状态） – sigmoid – 评估重要性 – A1</p>
 <p>(A1 X 上个细胞的新状态) – 更新去除不重要的状态 + 增加重要的状态的权重 – B1</p>
@@ -148,7 +148,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/09/08/电影评论情感分析/" data-id="ck0b24o4o000jyotjyfzmtqm9"
+      <a data-url="http://yoursite.com/2019/09/08/电影评论情感分析/" data-id="ck0b25cnd000iootjtiwt3far"
          class="article-share-link">Share</a>
       
     </footer>
