@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>
+    电影评论情感分析 |
+    
+    Ramona&#39;s Own Space</title>
+  
+    <link rel="shortcut icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+    <link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+  
+  <script src="/js/pace.min.js"></script>
+</head>
+</html>
+<body>
+<main class="content">
+  <section class="outer">
+  <article id="post-电影评论情感分析" class="article article-type-post" itemscope itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      电影评论情感分析
+    </h1>
+  
+  
+
+
+
+
+      </header>
+    
+
+    
+      <div class="article-meta">
+        <a href="/2019/09/08/电影评论情感分析/" class="article-date">
+  <time datetime="2019-09-08T12:46:21.033Z" itemprop="datePublished">2019-09-08</time>
+</a>
+        
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/自然语言处理/">自然语言处理</a>
+  </div>
+
+      </div>
+    
+
+    <div class="article-entry" itemprop="articleBody">
+      
+
+      
+
+      
+        <p>第一个简单的自然语言处理实践。Bayes、SVM、MLP、LSTM。</p>
+<a id="more"></a>
+
+<h1 id="1-界面包括"><a href="#1-界面包括" class="headerlink" title="1.界面包括"></a>1.界面包括</h1><p>无论是训练的数据还是测试的数据，都是放在程序外面进行预处理的，避免重复处理。在进行处理之前首先要对数据进行清洗：出去带有空项的行，评论没有星级的也直接删除。这个部分的操作比较基础，所以就没有放在整个程序中。</p>
+<p>所以界面包括了四个步骤：</p>
+<p>1.分词去除停顿词</p>
+<p>2.词向量化</p>
+<p>3.选择算法进行训练</p>
+<p>4.选择算法进行测试</p>
+<h1 id="2-预处理分析"><a href="#2-预处理分析" class="headerlink" title="2.预处理分析"></a>2.预处理分析</h1><p>因为不同的电影，所包含的东西不同，所以不能笼统的用所有的电影评论进行统一模型的训练，所以，比较建议的方法是，针对一部电影进行一次模型的训练。但是这样就会出现一个问题，就是单部的电影的评论并不多，机器学习，需要的就是足够的训练数据量。因此，需要结合具体的情况具体分析。这里，我使用了，一部电影来进行分析。</p>
+<p>首先将训练的数据分为两部分，手动进行分，因为在整个的流程中，把训练和测试分为了两个部分，所以不建议使用内置的方法进行训练数据和测试数据的分离。</p>
+<p>因为是正负评论分开的，所以针对训练数据，就只有comment一项。但是对测试数据，仍然有comment,star,sentiment三项。</p>
+<p>主要进行的处理就是：</p>
+<h2 id="分词"><a href="#分词" class="headerlink" title="分词"></a>分词</h2><p>使用的是python的内置库 - jieba  </p>
+<h2 id="去除重复词"><a href="#去除重复词" class="headerlink" title="去除重复词"></a>去除重复词</h2><p>使用的是baidu的一个重复此汇包，但是里面的符号不够全，于是，我手动的加上了部分符号。</p>
+<h2 id="词向量化"><a href="#词向量化" class="headerlink" title="词向量化"></a>词向量化</h2><blockquote>
+</blockquote>
+<p>里面的步骤描述的比较清楚，为了使我之后能够更直观的复习整个过程，我大概的整理了一个流程</p>
+<h3 id="1-环境准备"><a href="#1-环境准备" class="headerlink" title="1.环境准备"></a>1.环境准备</h3><p>gensim：Word2vec需要使用第三方gensim模块， gensim模块依赖numpy和scipy两个包，因此需要依次下载对应版本的numpy、scipy、gensim。</p>
+<p>Opencc：中文语料库中很多繁体字，利用Opencc可以将繁体字转换为简体字</p>
+<h3 id="2-语料库准备"><a href="#2-语料库准备" class="headerlink" title="2.语料库准备"></a>2.语料库准备</h3><p>去wiki官网下载中文语料库。</p>
+<h3 id="3-语料库处理"><a href="#3-语料库处理" class="headerlink" title="3.语料库处理"></a>3.语料库处理</h3><p>转换中文语料库的格式：</p>
+<p>xml - text(wikiCorpus) 一篇文章对应为一行，并去除标点符号</p>
+<p>text ： 繁体字转换为简体字</p>
+<h3 id="4-分词"><a href="#4-分词" class="headerlink" title="4.分词"></a>4.分词</h3><p>使用jieba分词</p>
+<h3 id="5-Word2Vec-模型训练"><a href="#5-Word2Vec-模型训练" class="headerlink" title="5.Word2Vec 模型训练"></a>5.Word2Vec 模型训练</h3><h2 id="测试数据处理"><a href="#测试数据处理" class="headerlink" title="测试数据处理"></a>测试数据处理</h2><p>针对测试数据，处理的流程稍微有点不同：</p>
+<p>因为测试数据包含了三列：comment\ star\sentiment</p>
+<p>首先需要的是按照star转换相应的sentiment</p>
+<p>然后comment按照训练数据的方式进行处理之后用训练好的模型进行预测，得到的结果与sentiment进行比较就可以得到模型的训练效果了。</p>
+<hr>
+<p>至此所有的词汇预处理已经结束。</p>
+<h1 id="3-模型建立"><a href="#3-模型建立" class="headerlink" title="3.模型建立"></a>3.模型建立</h1><p>在这个部分，我使用了四个模型，Bayes\SVM\MLP\LSTM</p>
+<h2 id="Bayes"><a href="#Bayes" class="headerlink" title="Bayes"></a>Bayes</h2><p>在不知道事情的具体占比的情况下，根据事件发生的频率进行估计。更通俗的来讲就是，我已知某些属性的概率，通过这些属性的概率来对想要判断的属性进行判断。例如，我有一堆的数据，记录了不同性别，不同人的，身高，体重，鞋码，等。我现在可以通过身高，体重，鞋码这些属性来判断是男是女的可能性。</p>
+<h3 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h3><p>先验：根据以往的下雨的经验，判断可能下雨的概率。</p>
+<p>似然：下雨的时候有乌云的概率。</p>
+<p>后验：天上有乌云，下雨的概率。</p>
+<p>离散数据：1 2 3 叫离散。 - 直接带入分布概率。</p>
+<p>连续数据：1-3中所有可能的取值叫连续。 - 转换为密度函数计算分布概率。</p>
+<h3 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h3><p>高斯朴素贝叶斯：特征变量是连续变量，符合高斯分布。比如说人的高度、物体的长度。</p>
+<p>多项式朴素贝叶斯：特征变量是离散变量，符合多项式分布，在文档分类中特征变量体现在一个单词出现的次数，或者是单词的TF-IDF</p>
+<p>伯努利朴素贝叶斯：特征变量是布尔变量，在文档分类中单词是否出现。</p>
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><p><strong>需要训练数据 + 训练数据标签 + 测试数据</strong></p>
+<p>训练数据 - 分词 - 去除停顿词 - 计算 TF-IDF - train</p>
+<p>或者是</p>
+<p>训练数据 - 分词 - 去除停顿词 - 向量化  - train</p>
+<p>选择的训练模型是 多项式朴素贝叶斯模型 - 不允许有负值  - 所以不能用向量化，向量化的时候会有负值出现，所以只能用TF-IDF（目前我所了解到的）</p>
+<h2 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>用比较通俗的话来说就是进行二分类，在平面上找到，两个最近的点找到一个超平面使得最近的点的距离最大。</p>
+<p>如果二维平面分类比较难，那么可以将二维平面升维，发展到多维平面，那么可以更好的分类 - kernel</p>
+<h3 id="分类-1"><a href="#分类-1" class="headerlink" title="分类"></a>分类</h3><p>硬间隔：完全分类准备，不存在分类错误的情况</p>
+<p>软间隔：允许一定量的样本分类错误的概率</p>
+<p>非线性SVM：使用kernel，常用的核函数有，线性式，多项式，高斯核，拉普拉斯核，sigmoid核，组合核。不同在于映射方式不同。</p>
+<h2 id="MLP"><a href="#MLP" class="headerlink" title="MLP"></a>MLP</h2><p>多层感知机</p>
+<p>使用的是经过向量化的数据，向量化之后的数据训练出来的模型的准确率要高一点。</p>
+<p>最高的正确率在88%</p>
+<p>使用PCA降维 - 特征数从399 - 100</p>
+<p>隐藏层四层：input(100) - h1(80) - h2(40) - d2(0.8) - h3(20) - d3(0.8) - h4(10) - d4(0.9) - output(1)</p>
+<h2 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h2><p>普通的神经网络没有记忆的特性，LSTM是为了解决长期的问题而专门设计的。</p>
+<h3 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h3><p>LSTM是在RNN基础上的改进版本。</p>
+<h4 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h4><p>tanh：控制值在[-1,1]之间，因为在神经网络的训练过程中，值有叠加的现象，如果不一直控制在一个范围之内的话，那么部分值可能占比较大，致使其余的值并不能起作用。</p>
+<p>sigmoid：控制值在[0,1]之间，因为取值在零，就可以表示该部分特征不重要，取值越大，那么该部分的特征就越重要。所以，在LSTM中可以很好的进行特征的控制。</p>
+<h4 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h4><p>一个单词由一个向量组成，上一个单词由tanh处理之后，会作为下一个单词的输入，和下一个单词一起作为输入。</p>
+<p>如此下一个单词的输入是包括了前面所有单词的信息的。这样就加强了前后单词的连接，对文本语音的处理十分有用。但是RNN却有一个很严重的缺点，神经网络很重要的部分是反馈，由于时间线过长，可能会造成梯度消失的问题。导致反馈过程终止，模型的训练也达不到预想的效果。</p>
+<h4 id="LSTM-1"><a href="#LSTM-1" class="headerlink" title="LSTM"></a>LSTM</h4><p>有三个门：遗忘门、输入门、输出门。</p>
+<p><img src="F:%5C%E7%AC%94%E8%AE%B0%5C%E5%9B%BE%5CLSTM.png" alt></p>
+<p>遗忘门：</p>
+<p>（上个细胞的隐藏状态 + 当前细胞的现状态） – sigmoid – 评估重要性 – A1</p>
+<p>(A1 X 上个细胞的新状态) – 更新去除不重要的状态 + 增加重要的状态的权重 – B1</p>
+<p>输入门：</p>
+<p>（上个细胞的隐藏状态 + 当前细胞的现状态） – sigmoid – 评估重要性 – A2</p>
+<p>（上个细胞的隐藏状态 + 当前细胞的现状态） – tanh – 限制范围 – A3</p>
+<p>（A2 X A3） – 更新去除不重要的状态 + 增加重要的状态的权重 – B2</p>
+<p>更新状态：</p>
+<p>（B1 + B2） – 等于当前细胞的新状态 – 作为下个细胞的遗忘门的输入 – C1</p>
+<p>（上个细胞的隐藏状态 + 当前细胞的现状态） – sigmoid – 评估重要性 – A4</p>
+<p>（C1 X A4） – 更新去除不重要的状态 + 增加重要的状态的权重 – 当前细胞的隐藏状态 – 作为下个细胞的输入门元素 – C2</p>
+<h3 id="相关方法"><a href="#相关方法" class="headerlink" title="相关方法"></a>相关方法</h3><h4 id="Tokenzier"><a href="#Tokenzier" class="headerlink" title="Tokenzier"></a>Tokenzier</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#初始化</span></span><br><span class="line">tokenizer = Tokenizer() </span><br><span class="line"><span class="comment">#使用一系列的文档来生成token词典</span></span><br><span class="line">tokenizer.fit_on_texts(train_x)</span><br><span class="line"><span class="comment">#记录每个单词出现的次数</span></span><br><span class="line">print(tokenizer.word_counts)</span><br><span class="line"><span class="comment">#将每个单词映射为它们的排名或者索引</span></span><br><span class="line">print(len(tokenizer.word_index))</span><br><span class="line"></span><br><span class="line"><span class="comment">#将每个句子中的单词都变成其对应的index</span></span><br><span class="line">sequences_train = tokenizer.texts_to_sequences(train_x)</span><br></pre></td></tr></table></figure>
+
+<h4 id="LSTM-2"><a href="#LSTM-2" class="headerlink" title="LSTM"></a>LSTM</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#embedding_layer =Embedding(嵌入的词语的数量，每个词语将要嵌入的维度，该层的参数，输入的每个词语的维度)</span></span><br><span class="line">embedding_layer = Embedding(len(word_index) + <span class="number">1</span>,</span><br><span class="line">                                EMBEDDING_DIM,</span><br><span class="line">                                weights=[embedding_matrix],</span><br><span class="line">                                input_length=MAX_SEQUENCE_LENGTH,</span><br><span class="line">                                trainable=<span class="literal">False</span>)</span><br></pre></td></tr></table></figure>
+
+<h4 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#------------- 1 ---------------</span></span><br><span class="line"><span class="comment">#将类别向量转换为二进制（只有0和1）的矩阵类型表示。其表现为将原有的类别向量转换为独热编码的形式</span></span><br><span class="line">train_labels = to_categorical(train_y)</span><br><span class="line"><span class="comment">#[[0. 1.]</span></span><br><span class="line"><span class="comment"># [1. 0.]</span></span><br><span class="line"><span class="comment"># [1. 0.]</span></span><br><span class="line"><span class="comment"># ……]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#------------- 2 ---------------</span></span><br><span class="line"><span class="comment">#np.array</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">asarray</span><span class="params">(a, dtype=None, order=None)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> array(a, dtype, copy=<span class="literal">False</span>, order=order)</span><br><span class="line"><span class="comment">#np.asarray</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">array</span><span class="params">(a, dtype=None, order=None)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> array(a, dtype, copy=<span class="literal">True</span>, order=order)</span><br></pre></td></tr></table></figure>
+
+<h3 id="过程-1"><a href="#过程-1" class="headerlink" title="过程"></a>过程</h3><p>读入数据 - 数据分词去重 - 提取单词 - 形成矩阵 - 将词向量代替原始数据嵌入矩阵 - 将矩阵作为LSTM中的embedding层 - 构建 LSTM - 保存模型 - 预测</p>
+<p>LSTM模型的参数有点模糊 – 后续完善</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/09/08/电影评论情感分析/" data-id="ck0az6pwr0002yotjhtfkfutm"
+         class="article-share-link">Share</a>
+      
+    </footer>
+
+  </div>
+
+  
+    
+  <nav class="article-nav">
+    
+    
+      <a href="/2019/08/01/第一个我自己的python爬虫程序/" class="article-nav-link">
+        <strong class="article-nav-caption">Olde posts</strong>
+        <div class="article-nav-title">我自己第一个python爬虫程序</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+    
+  
+
+</article>
+
+
+
+</section>
+  <footer class="footer">
+  <div class="outer">
+    <div class="float-right">
+      <ul class="list-inline">
+  
+    <li><i class="fe fe-smile-alt"></i> <span id="busuanzi_value_site_uv"></span></li>
+  
+</ul>
+    </div>
+    <ul class="list-inline">
+      <li>&copy; 2019 Ramona&#39;s Own Space</li>
+      <li>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></li>
+      <li>Theme  <a href="https://github.com/zhwangart/hexo-theme-ocean">Ocean</a></li>
+    </ul>
+  </div>
+</footer>
+
+</main>
+<aside class="sidebar">
+  <button class="navbar-toggle"></button>
+
+<nav class="navbar">
+  
+    <div class="logo">
+      <a href="/"><img src="/images/hexo.svg" alt="Ramona&#39;s Own Space"></a>
+    </div>
+  
+  <ul class="nav nav-main">
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/">Home</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/archives">Archives</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/categories">Categories</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-item-link" href="/about">About</a>
+      </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link nav-item-search" title="Search">
+        <i class="fe fe-search"></i>
+        Search
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      <div class="totop" id="totop">
+  <i class="fe fe-rocket"></i>
+</div>
+    </li>
+    <li class="nav-item">
+      
+        <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+          <i class="fe fe-feed"></i>
+        </a>
+      
+    </li>
+  </ul>
+</nav>
+
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+</aside>
+<script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/lazyload.min.js"></script>
+<script src="/js/snap.svg-min.js"></script>
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+
+
+  <script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/ocean.js"></script>
+
+</body>
+</html>
